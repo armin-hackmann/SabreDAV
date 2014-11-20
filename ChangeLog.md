@@ -19,10 +19,12 @@ ChangeLog
 * Removed: `Sabre\DAV\Plugin::getPlugin()` can now no longer return plugins
   based on its class name.
 * Removed: `Sabre\DAVACL\Plugin::getPrincipalByEmail()`.
+* #560: GuessContentType plugin will now set content-type to
+  `application/octet-stream` if a better content-type could not be determined.
 
 
-2.1.0-beta1 (2014-??-??)
-------------------------
+2.1.0 (2014-11-19)
+------------------
 
 * #541: CalDAV PDO backend didn't respect overridden PDO table names.
 * #550: Scheduling invites are no longer delivered into shared calendars.
@@ -32,6 +34,10 @@ ChangeLog
   `free-busy-query` REPORTs.
 * #555: The `calendar-timezone` property is also respected for scheduling
   free-busy requests.
+* #547: CalDAV system too aggressively 'corrects' incoming iCalendar data, and
+  as a result doesn't return an etag for common cases.
+* The zip release ships with [sabre/vobject 3.3.4][vobj],
+  [sabre/http 3.0.2][http], and [sabre/event 2.0.1][evnt].
 
 
 2.1.0-alpha2 (2014-10-23)
@@ -123,6 +129,16 @@ ChangeLog
 * Added: #523 Custom CalDAV backends can now mark any calendar as read-only.
 * The zip release ships with [sabre/vobject 3.3.3][vobj],
   [sabre/http 3.0.0][http], and [sabre/event 2.0.0][evnt].
+
+
+2.0.6 (????-??-??)
+------------------
+
+* Added `Sabre\CalDAV\CalendarRoot` as an alias for
+  `Sabre\CalDAV\CalendarRootNode`. The latter is going to be deprecated in 2.1,
+  so this makes it slightly easier to write code that works in both branches.
+* #497: Making sure we're initializing the sync-token field with a value after
+  migration.
 
 
 2.0.5 (2014-10-14)

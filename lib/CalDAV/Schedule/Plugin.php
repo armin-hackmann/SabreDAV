@@ -785,6 +785,8 @@ class Plugin extends ServerPlugin {
 
         // Grabbing the calendar list
         $objects = [];
+        $calendarTimeZone = new DateTimeZone('UTC');
+
         foreach($this->server->tree->getNodeForPath($homeSet)->getChildren() as $node) {
             if (!$node instanceof ICalendar) {
                 continue;
@@ -805,8 +807,6 @@ class Plugin extends ServerPlugin {
             if (isset($props[$ctz])) {
                 $vtimezoneObj = VObject\Reader::read($props[$ctz]);
                 $calendarTimeZone = $vtimezoneObj->VTIMEZONE->getTimeZone();
-            } else {
-                $calendarTimeZone = new DateTimeZone('UTC');
             }
 
             // Getting the list of object uris within the time-range
@@ -874,4 +874,24 @@ class Plugin extends ServerPlugin {
 
     }
 
+    /**
+     * Returns a bunch of meta-data about the plugin.
+     *
+     * Providing this information is optional, and is mainly displayed by the
+     * Browser plugin.
+     *
+     * The description key in the returned array may contain html and will not
+     * be sanitized.
+     *
+     * @return array
+     */
+    function getPluginInfo() {
+
+        return [
+            'name'        => $this->getPluginName(),
+            'description' => 'Adds calendar-auto-schedule, as defined in rf6868',
+            'link'        => 'http://sabre.io/dav/scheduling/',
+        ];
+
+    }
 }

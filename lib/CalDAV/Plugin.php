@@ -18,7 +18,7 @@ use Sabre\HTTP\ResponseInterface;
  * This plugin provides functionality added by CalDAV (RFC 4791)
  * It implements new reports, and the MKCALENDAR method.
  *
- * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @copyright Copyright (C) 2007-2015 fruux GmbH (https://fruux.com/).
  * @author Evert Pot (http://evertpot.com/)
  * @license http://sabre.io/license/ Modified BSD License
  */
@@ -456,8 +456,6 @@ class Plugin extends DAV\ServerPlugin {
             $uris[] = $this->server->calculateUri($elem->nodeValue);
         }
 
-        $tz = null;
-
         $timeZones = [];
 
         foreach($this->server->getPropertiesForMultiplePaths($uris, $properties) as $uri=>$objProps) {
@@ -619,8 +617,6 @@ class Plugin extends DAV\ServerPlugin {
         if ($node instanceof ICalendarObjectContainer && $depth == 1) {
 
             $nodePaths = $node->calendarQuery($parser->filters);
-
-            $timeZones = [];
 
             foreach($nodePaths as $path) {
 

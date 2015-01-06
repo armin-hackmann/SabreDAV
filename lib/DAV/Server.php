@@ -12,7 +12,7 @@ use
 /**
  * Main DAV server class
  *
- * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @copyright Copyright (C) 2007-2015 fruux GmbH (https://fruux.com/).
  * @author Evert Pot (http://evertpot.com/)
  * @license http://sabre.io/license/ Modified BSD License
  */
@@ -441,9 +441,10 @@ class Server extends EventEmitter {
      *
      * @param RequestInterface $request
      * @param ResponseInterface $response
+     * @param $sendResponse Whether to send the HTTP response to the DAV client.
      * @return void
      */
-    function invokeMethod(RequestInterface $request, ResponseInterface $response) {
+    function invokeMethod(RequestInterface $request, ResponseInterface $response, $sendResponse = true) {
 
         $method = $request->getMethod();
 
@@ -471,8 +472,10 @@ class Server extends EventEmitter {
         if (!$this->emit('afterMethod:' . $method, [$request, $response])) return;
         if (!$this->emit('afterMethod', [$request, $response])) return;
 
-        $this->sapi->sendResponse($response);
-        $this->emit('afterResponse', [$request, $response]);
+        if ($sendResponse) {
+            $this->sapi->sendResponse($response);
+            $this->emit('afterResponse', [$request, $response]);
+        }
 
     }
 

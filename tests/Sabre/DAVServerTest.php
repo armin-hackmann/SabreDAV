@@ -13,7 +13,7 @@ use
  * This class is supposed to provide a reasonably big framework to quickly get
  * a testing environment running.
  *
- * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @copyright Copyright (C) 2007-2015 fruux GmbH (https://fruux.com/).
  * @author Evert Pot (http://evertpot.com/)
  * @license http://sabre.io/license/ Modified BSD License
  */
@@ -133,8 +133,8 @@ abstract class DAVServerTest extends \PHPUnit_Framework_TestCase {
         }
         if ($this->autoLogin) {
             $authBackend = new DAV\Auth\Backend\Mock();
-            $authBackend->defaultUser = $this->autoLogin;
-            $this->authPlugin = new DAV\Auth\Plugin($authBackend, 'SabreDAV');
+            $authBackend->setPrincipal('principals/' . $this->autoLogin);
+            $this->authPlugin = new DAV\Auth\Plugin($authBackend);
             $this->server->addPlugin($this->authPlugin);
 
             // This will trigger the actual login procedure

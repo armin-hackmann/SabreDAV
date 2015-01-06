@@ -1,12 +1,21 @@
 ChangeLog
 =========
 
-2.2.0-alpha1 (????-??-??)
+2.2.0-alpha2 (2015-??-??)
+-------------------------
+
+* Renamed `Sabre\DAV\Auth\Backend\BackendInterface::requireAuth` to
+  `challenge`, which is a more correct and better sounding name.
+
+
+2.2.0-alpha1 (2014-12-10)
 -------------------------
 
 * The browser plugin now has a new page with information about your sabredav
   server, and shows information about every plugin that's loaded in the
   system.
+* #191: The Authentication system can now support multiple authentication
+  backends.
 * Removed: all `$tableName` arguments from every PDO backend. This was already
   deprecated, but has now been fully removed. All of these have been replaced
   with public properties.
@@ -26,9 +35,14 @@ ChangeLog
   `application/octet-stream` if a better content-type could not be determined.
 * #568: Added a `componentType` argument to `ICSExportPlugin`, allowing you to
   specifically fetch `VEVENT`, `VTODO` or `VJOURNAL`.
+* #582: Authentication backend interface changed to be stateless. If you
+  implemented your own authentication backend, make sure you upgrade your class
+  to the latest API!
+* #582: `Sabre\DAV\Auth\Plugin::getCurrentUser()` is now deprecated. Use
+  `Sabre\DAV\Auth\Plugin::getCurrentPrincipal()` instead.
 
 
-2.1.2 (2014-??-??)
+2.1.2 (2014-12-10)
 ------------------
 
 * #566: Another issue related to the migration script, which would cause
@@ -36,6 +50,11 @@ ChangeLog
   migration.
 * #567: Doing freebusy requests on accounts that had 0 calendars would throw
   a `E_NOTICE`.
+* #572: `HEAD` requests trigger a PHP warning.
+* #579: Browser plugin can throw exception for a few resourcetypes that didn't
+  have an icon defined.
+* The zip release ships with [sabre/vobject 3.3.4][vobj],
+  [sabre/http 3.0.4][http], and [sabre/event 2.0.1][evnt].
 
 
 2.1.1 (2014-11-22)
@@ -156,7 +175,7 @@ ChangeLog
   [sabre/http 3.0.0][http], and [sabre/event 2.0.0][evnt].
 
 
-2.0.6 (????-??-??)
+2.0.6 (2014-12-10)
 ------------------
 
 * Added `Sabre\CalDAV\CalendarRoot` as an alias for
@@ -164,6 +183,8 @@ ChangeLog
   so this makes it slightly easier to write code that works in both branches.
 * #497: Making sure we're initializing the sync-token field with a value after
   migration.
+* The zip release ships with [sabre/vobject 3.3.4][vobj],
+  [sabre/http 2.0.4][http], and [sabre/event 1.0.1][evnt].
 
 
 2.0.5 (2014-10-14)
@@ -356,17 +377,20 @@ ChangeLog
 * Added: Issue #358, adding a component=vevent parameter to the content-types
   for calendar objects, if the caldav backend provides this info.
 
-1.8.11 (2014-??-??)
+1.8.11 (2014-12-10)
 -------------------
 
+* The zip release ships with sabre/vobject 2.1.6.
 * Updated: MySQL database schema optimized by using more efficient column types.
 * #516: The DAV client will now only redirect to HTTP and HTTPS urls.
+
 
 1.8.10 (2014-05-15)
 -------------------
 
 * The zip release ships with sabre/vobject 2.1.4.
 * includes changes from version 1.7.12.
+
 
 1.8.9 (2014-02-26)
 ------------------

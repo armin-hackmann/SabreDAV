@@ -19,7 +19,7 @@ use
  * property, defined in RFC5397 and the {DAV:}expand-property report, as
  * defined in RFC3253.
  *
- * @copyright Copyright (C) 2007-2014 fruux GmbH (https://fruux.com/).
+ * @copyright Copyright (C) 2007-2015 fruux GmbH (https://fruux.com/).
  * @author Evert Pot (http://evertpot.com/)
  * @license http://sabre.io/license/ Modified BSD License
  */
@@ -85,15 +85,6 @@ class Plugin extends DAV\ServerPlugin {
      * @var bool
      */
     public $hideNodesFromListings = false;
-
-    /**
-     * This string is prepended to the username of the currently logged in
-     * user. This allows the plugin to determine the principal path based on
-     * the username.
-     *
-     * @var string
-     */
-    public $defaultUsernamePath = 'principals';
 
     /**
      * This list of properties are the properties a client can search on using
@@ -242,10 +233,7 @@ class Plugin extends DAV\ServerPlugin {
         if (is_null($authPlugin)) return null;
         /** @var $authPlugin Sabre\DAV\Auth\Plugin */
 
-        $userName = $authPlugin->getCurrentUser();
-        if (!$userName) return null;
-
-        return $this->defaultUsernamePath . '/' .  $userName;
+        return $authPlugin->getCurrentPrincipal();
 
     }
 
